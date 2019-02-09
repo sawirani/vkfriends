@@ -1,0 +1,21 @@
+{
+  "name": "rest-service",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "request-promise": "4.2.2",
+    "https": "*",
+    "json5": "*"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0",
+    "uglifycss": "*",
+    "cors": "2.8.4"
+  }
+}
