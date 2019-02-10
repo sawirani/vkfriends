@@ -4,11 +4,12 @@ import {HttpClientModule} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { UsersComponent } from './users/users.component';
-import { IndexComponent } from './index/index.component';
+import { UsersComponent } from './components/users/users.component';
+import { IndexComponent } from './components/index/index.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import { NavigationComponent } from './navigation/navigation.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import {TestService} from './services/test.service';
 
 
 @NgModule({
@@ -25,7 +26,7 @@ import { NavigationComponent } from './navigation/navigation.component';
     BrowserAnimationsModule,
     MatToolbarModule,
   ],
-  providers: [],
+  providers: [TestService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

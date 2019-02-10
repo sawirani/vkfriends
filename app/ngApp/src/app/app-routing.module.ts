@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import { UsersComponent } from './users/users.component';
-import { IndexComponent} from "./index/index.component";
+import {UsersComponent} from './components/users/users.component';
+import {IndexComponent} from './components/index/index.component';
 
-let defaultRoot = 'app';
+const defaultRoot = 'app';
 
 const routes: Routes = [
   {path: defaultRoot + '', component: IndexComponent},
@@ -15,4 +15,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
