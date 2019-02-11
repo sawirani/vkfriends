@@ -9,9 +9,10 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
-    "request-promise": "4.2.2",
     "https": "*",
-    "json5": "*"
+    "json5": "*",
+    "request": "^2.88.0",
+    "request-promise": "4.2.2"
   },
   "devDependencies": {
     "nodemon": "^1.11.0",

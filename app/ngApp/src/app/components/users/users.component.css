@@ -1,0 +1,13 @@
+.card {
+  min-width: 500px;
+  margin: 2% 25% 2% 25%
+}
+
+.card:hover {
+  opacity: 0.7;
+}
+
+.header-image {
+  height: 100px;
+  width: 100px;
+}

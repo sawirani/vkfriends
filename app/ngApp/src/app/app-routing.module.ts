@@ -7,7 +7,7 @@ import {IndexComponent} from './components/index/index.component';
 const defaultRoot = 'app';
 
 const routes: Routes = [
-  {path: defaultRoot + '', component: IndexComponent},
+  {path: defaultRoot + '', component: IndexComponent, pathMatch: 'full'},
   {path: defaultRoot + '/users', component: UsersComponent}
 ];
 

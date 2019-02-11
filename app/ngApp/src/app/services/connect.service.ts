@@ -2,14 +2,15 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable()
-export class TestService {
+export class ConnectService {
 
-  domain = 'http://localhost:8181/'
+  domain = 'http://localhost:8181/';
 
   constructor(private http: HttpClient) {
   }
 
-  getTestReq() {
-    return this.http.get(this.domain + 'app/test');
+  getUser() {
+    const req = this.domain + 'app/getfriends';
+    return this.http.get(req);
   }
 }

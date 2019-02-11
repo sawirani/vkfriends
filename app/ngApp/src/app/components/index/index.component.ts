@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {TestService} from '../../services/test.service';
 
 
 @Component({
@@ -11,16 +10,7 @@ export class IndexComponent implements OnInit {
 
   name: any;
 
-  constructor(
-    private testServ: TestService
-  ) {
-  }
-
-  getTest() {
-    this.testServ.getTestReq()
-      .subscribe((data: any) => {
-        console.log(data);
-      });
+  constructor() {
   }
 
   ngOnInit() {

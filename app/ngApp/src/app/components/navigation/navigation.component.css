@@ -1,23 +1,27 @@
-.toolbar{
+.toolbar {
   background-color: #8f5656;
-  color:#ffffff;
+  color: #ffffff;
 }
-.toolbar-header{
+
+.toolbar-header {
   font-size: 25px;
 }
 
-.toolbar-menu{
+.toolbar-menu {
   height: 50px;
   font-size: 20px;
   text-align: center;
   padding: 10px 5px 0 5px;
 }
-.toolbar-menu:hover{
+
+.toolbar-menu:hover {
   background-color: #4f2f2f;
 }
-.toolbar-menu:active{
+
+.toolbar-menu:active {
   color: grey;
 }
+
 .spacer {
   flex: 1 1 auto;
 }
