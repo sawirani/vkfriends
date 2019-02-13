@@ -1,4 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material';
+import {DialogViewComponent} from '../dialog-view/dialog-view.component';
+
 
 
 @Component({
@@ -6,14 +9,18 @@ import {Component, OnInit} from '@angular/core';
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.css']
 })
-export class IndexComponent implements OnInit {
+export class IndexComponent {
 
-  name: any;
+  constructor(public dialog: MatDialog) {}
 
-  constructor() {
-  }
+  openPopUp(): void {
+    const dialogRef = this.dialog.open(DialogViewComponent, {
+      width: '700px',
+    });
 
-  ngOnInit() {
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 }

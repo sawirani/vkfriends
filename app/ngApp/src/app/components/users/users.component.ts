@@ -9,16 +9,17 @@ import {ConnectService} from '../../services/connect.service';
 export class UsersComponent implements OnInit {
 
   users: object[];
+  token: string;
 
-  constructor(private connectServ: ConnectService) {
-  }
+  constructor(
+    private connectServ: ConnectService,
+  ) {}
+
 
   ngOnInit() {
     this.connectServ.getUser()
       .subscribe((data: any) => {
-        console.log(data);
         this.users = data.data.items;
-        console.log(this.users);
       });
   }
 

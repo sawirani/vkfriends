@@ -9,8 +9,16 @@ export class ConnectService {
   constructor(private http: HttpClient) {
   }
 
+  saveToken(token: string): void {
+    localStorage.setItem('token', token);
+  }
+
+  isToken(): boolean {
+    return localStorage.getItem('token') ? true : false;
+  }
+
   getUser() {
-    const req = this.domain + 'app/getfriends';
-    return this.http.get(req);
+    const token = localStorage.getItem('token');
+    return this.http.get(this.domain + 'app/getfriends' + token);
   }
 }
