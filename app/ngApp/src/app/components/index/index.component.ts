@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {DialogViewComponent} from '../dialog-view/dialog-view.component';
-
-
+import { ConnectService } from '../../services/connect.service';
 
 @Component({
   selector: 'app-index',
@@ -11,7 +10,8 @@ import {DialogViewComponent} from '../dialog-view/dialog-view.component';
 })
 export class IndexComponent {
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog,
+   private con: ConnectService) {}
 
   openPopUp(): void {
     const dialogRef = this.dialog.open(DialogViewComponent, {
@@ -20,6 +20,12 @@ export class IndexComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+    });
+  }
+
+  tok() {
+    this.con.GetToken().subscribe(result => {
+      console.log(result);
     });
   }
 

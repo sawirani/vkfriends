@@ -25,4 +25,5 @@ module.exports = (app) => {
   app.get('/app*', (req, res) => {
     res.sendFile(path.join(__base, '/app/ngApp/dist/index.html'));
   });
+  
 };

@@ -13,17 +13,17 @@ const routes: Routes = [
   {
     path: defaultRoot + '',
     component: IndexComponent,
-    canActivate : [NoAuthGuard],
+    //canActivate : [NoAuthGuard],
   },
   {
     path: defaultRoot + '/users',
     component: UsersComponent,
-    canActivate : [AuthGuard],
+    //canActivate : [AuthGuard],
   },
   {
     path: defaultRoot + '/token',
     component: TokenComponent,
-    canActivate : [NoAuthGuard],
+    //canActivate : [NoAuthGuard],
   },
 ];
 
