@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ConnectService } from '../../services/connect.service';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ConnectService} from '../../services/connect.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-token',
@@ -12,9 +12,10 @@ export class TokenComponent implements OnInit {
   constructor(
     private connect: ConnectService,
     private router: Router,
-  ) { }
+  ) {
+  }
 
-  getToken(hash: string): string {
+  _getToken(hash: string): string {
     const startInd: number = hash.indexOf('access_token=') + 13;
     const endInd: number = hash.indexOf('&', startInd);
     let token = '';
@@ -26,8 +27,12 @@ export class TokenComponent implements OnInit {
 
   ngOnInit() {
     console.log(location.hash);
-    const token: string = this.getToken(location.hash);
+    const token: string = this._getToken(location.hash);
     this.connect.saveToken(token);
+    setTimeout(() => {
+        this.router.navigate(['/app/users']);
+      }
+      , 10);
   }
 
 }

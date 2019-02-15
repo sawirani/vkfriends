@@ -1,6 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
-import {DialogViewComponent} from '../dialog-view/dialog-view.component';
+import {Component} from '@angular/core';
 import { ConnectService } from '../../services/connect.service';
 
 @Component({
@@ -10,23 +8,17 @@ import { ConnectService } from '../../services/connect.service';
 })
 export class IndexComponent {
 
-  constructor(public dialog: MatDialog,
-   private con: ConnectService) {}
+  constructor(private con: ConnectService)
+  {}
 
-  openPopUp(): void {
-    const dialogRef = this.dialog.open(DialogViewComponent, {
-      width: '700px',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
-
-  tok() {
+  serverAuth() {
     this.con.GetToken().subscribe(result => {
       console.log(result);
     });
+  }
+
+  clientAuth() {
+    location.href = 'https://oauth.vk.com/authorize?client_id=6850358&display=page&redirect_uri=localhost:4200/app/token&scope=friends&response_type=token&v=5.52';
   }
 
 }

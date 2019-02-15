@@ -1,9 +1,8 @@
-<app-navigation></app-navigation>
 
-<mat-card class="card" *ngFor="let user of users">
-  <mat-card-header>
-    <img mat-card-avatar class="header-image" [src]="user.photo_100">
-    <mat-card-title>{{user.first_name}} {{user.last_name}}</mat-card-title>
-    <mat-card-subtitle>{{user.city.title}}</mat-card-subtitle>
-  </mat-card-header>
+<mat-form-field class="example-full-width">
+  <input matInput type="search" placeholder="Поиск" [(ngModel)] = "serchStr" (ngModelChange)="handleChange()">
+</mat-form-field>
+
+<mat-card class="card" *ngFor="let user of users" (click)="toProfile(user.id)">
+  <app-user [user]="user" ></app-user>
 </mat-card>
