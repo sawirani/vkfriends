@@ -1,5 +1,6 @@
 let path = require('path');
 const request = require('request');
+let cors = require('cors')
 
 module.exports = (app) => {
 
@@ -21,6 +22,23 @@ module.exports = (app) => {
         }
       })
   });
+
+  var conf={
+    clientID:'6850358',
+    clientSecret:'bVU6fZW3TfR4pH7j0ceB',
+    callbackURL: 'localhost:8181/users'
+}
+
+  app.get('/auth/vk',(req,res) => {
+    //'https://oauth.vk.com
+    //res.setHeader('Access-Control-Allow-Origin', 'https://localhost:8181');
+    console.log(req.headers.referer)
+    res.redirect('https://oauth.vk.com/authorize?client_id=6850358&display=page&redirect_uri=localhost:8181/auth/vk/callback&scope=friends&response_type=code&v=5.92')
+  })
+
+  app.get('/auth/vk/callback',(req,res)=>{
+    console.log(res);
+  })
 
   app.get('/app*', (req, res) => {
     res.sendFile(path.join(__base, '/app/ngApp/dist/index.html'));

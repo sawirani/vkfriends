@@ -1,11 +1,13 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
+import { AuthGuard } from './guards/auth.guard';
+import { NoAuthGuard } from './guards/noauth.guard';
+
 import {UsersComponent} from './components/users/users.component';
 import {IndexComponent} from './components/index/index.component';
 import {TokenComponent} from './components/token/token.component';
-import { AuthGuard } from './guards/auth.guard';
-import { NoAuthGuard } from './guards/noauth.guard';
+import {ProfileComponent} from './components/profile/profile.component';
 
 const defaultRoot = 'app';
 
@@ -13,17 +15,22 @@ const routes: Routes = [
   {
     path: defaultRoot + '',
     component: IndexComponent,
-    //canActivate : [NoAuthGuard],
+    canActivate : [NoAuthGuard],
   },
   {
     path: defaultRoot + '/users',
     component: UsersComponent,
-    //canActivate : [AuthGuard],
+    canActivate : [AuthGuard],
   },
   {
     path: defaultRoot + '/token',
     component: TokenComponent,
-    //canActivate : [NoAuthGuard],
+    canActivate : [NoAuthGuard],
+  },
+  {
+    path: defaultRoot + '/profile/:id',
+    component: ProfileComponent,
+    canActivate : [AuthGuard],
   },
 ];
 

@@ -11,7 +11,8 @@ import {Router} from '@angular/router';
 export class UsersComponent implements OnInit {
 
   users: User[];
-  serchStr: string;
+  searchStr = '';
+  paramSelect: string;
 
 
   constructor(
@@ -24,31 +25,43 @@ export class UsersComponent implements OnInit {
     this._router.navigate(['app/profile', userId]);
   }
 
-  // имя фамилия город
-  handleChange() {
+  _checkPerams(params: string, user: User) {
     let count = 0;
+    for (let i = 0; i < this.searchStr.length; i++) {
+      if (user[params][i].toLowerCase() === this.searchStr[i]) {
+        count++;
+      }
+      if (count === this.searchStr.length) {
+        return true;
+      }
+    }
+    return false;
+  }
 
-    this.users = this.users.filter(user => {
-      const keys = Object.keys(user);
-      for (let j = 0; j < keys.length; j++) {
-        if (user[keys[j]] === 'firstName' || user[keys[j]] === 'lastName' || user[keys[j]] === 'city') {
-          for (let i = 0; i < this.serchStr.length; i++) {
-            if (count === this.serchStr.length) {
-              return true;
-            }
-            if (user[keys[j]][i] === this.serchStr[i]) {
-              count++;
+  // имя фамилия город
+  find(user: User) {
+    if (this.searchStr) {
+      if (this.paramSelect) {
+        return !this._checkPerams(this.paramSelect, user);
+      } else {
+        for (const field in user) {
+          if (field === 'firstName' || field === 'lastName' || field === 'city') {
+            if (this._checkPerams(field, user)) {
+              return false;
             }
           }
         }
+        return true;
       }
+    } else {
       return false;
-    });
+    }
   }
 
   ngOnInit() {
-    this._connectService.getUser()
+    this._connectService.getFriends()
       .subscribe((data: any) => {
+        console.log(data);
         this.users = data.data.items.map((item) => {
           const user = new User();
           user.firstName = item.first_name;

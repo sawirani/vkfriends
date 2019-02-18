@@ -32,7 +32,7 @@ export class TokenComponent implements OnInit {
     setTimeout(() => {
         this.router.navigate(['/app/users']);
       }
-      , 10);
+      , 5);
   }
 
 }

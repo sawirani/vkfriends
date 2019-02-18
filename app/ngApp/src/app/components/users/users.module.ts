@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
 
 import {UsersComponent} from './users.component';
-import { SearchComponent } from './search/search.component';
 import { UserComponent } from './user/user.component';
 
 @NgModule({
@@ -14,11 +14,11 @@ import { UserComponent } from './user/user.component';
     CommonModule,
     MatCardModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatSelectModule
   ],
   declarations: [
     UsersComponent,
-    SearchComponent,
     UserComponent
   ],
 })

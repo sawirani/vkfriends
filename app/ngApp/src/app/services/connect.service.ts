@@ -17,13 +17,12 @@ export class ConnectService {
     return localStorage.getItem('token') ? true : false;
   }
 
-  getUser() {
+  getFriends() {
     const token = localStorage.getItem('token');
     return this.http.get(this.domain + 'app/getfriends' + token);
   }
 
   GetToken() {
-    console.log("tut");
     return this.http.get(this.domain + 'auth/vk');
   }
   

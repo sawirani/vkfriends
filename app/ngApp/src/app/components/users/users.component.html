@@ -1,8 +1,21 @@
 
-<mat-form-field class="example-full-width">
-  <input matInput type="search" placeholder="Поиск" [(ngModel)] = "serchStr" (ngModelChange)="handleChange()">
+<mat-card class="search-panel">
+<mat-form-field class="search">
+  <input matInput type="search" placeholder="Поиск" [(ngModel)]="searchStr">
 </mat-form-field>
-
-<mat-card class="card" *ngFor="let user of users" (click)="toProfile(user.id)">
-  <app-user [user]="user" ></app-user>
+  <mat-form-field>
+    <mat-select [(value)]="paramSelect">
+      <mat-option >None</mat-option>
+      <mat-option value="firstName">Имя</mat-option>
+      <mat-option value="lastName">Фамилия</mat-option>
+    </mat-select>
+  </mat-form-field>
 </mat-card>
+
+<div *ngFor="let user of users">
+  <mat-card class="card" *ngIf="!find(user)" (click)="toProfile(user.id)">
+    <app-user [user]="user" *ngIf="!find(user)"></app-user>
+  </mat-card>
+</div>
+
+

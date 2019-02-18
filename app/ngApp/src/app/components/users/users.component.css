@@ -6,3 +6,16 @@
 .card:hover {
   opacity: 0.7;
 }
+.card:active{
+  opacity: 1;
+}
+
+.search{
+  width: 50%;
+  margin: 0  0 0 20%;
+}
+
+/*.search-panel{*/
+  /*width: 100%;*/
+  /*position: fixed;*/
+/*}*/
