@@ -6,7 +6,7 @@
     </i>
   </button>
 
-  <span *ngFor="let vpage of pagesNumber" [ngClass]="isThisPage(vpage)">
+  <span *ngFor="let vpage of pagesNumber" [ngClass]="isThisPage(vpage)" (click)="changePage(vpage)">
     {{vpage}}
   </span>
 
@@ -20,7 +20,7 @@
 
   <span> друзей на странице :</span>
   <mat-form-field class="pagesCounter">
-    <mat-select [(ngModel)]="prevPages" (change)="chengePageCount()">
+    <mat-select [(ngModel)]="prevPages" (change)="changePageCount()">
       <mat-option *ngFor="let page of prevCount" [value]="page">
         {{page}}
       </mat-option>
@@ -28,5 +28,3 @@
   </mat-form-field>
 
 </div>
-
-{{items}}

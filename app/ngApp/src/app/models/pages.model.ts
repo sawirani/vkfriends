@@ -1,5 +1,4 @@
 export class Pages {
-  elementsCount: number;
-  now: number;
+  page: number;
   count: number;
-};
+}

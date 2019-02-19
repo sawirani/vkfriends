@@ -9,15 +9,9 @@ import {ConnectService} from '../../services/connect.service';
 export class PaginationComponent implements OnInit {
 
   @Input() items: number;
-  //@Input() perPage: number;
-  //@Input() pagesToShow: number;
-  //@Input() loading: boolean;
-
-  // приминаем количество всего чтобы понять сколько страниц
-  // отправляем соличество на странице
-  // отправлем текущую страницу
 
   @Output() sendPageCount: EventEmitter<number> = new EventEmitter<number>();
+  @Output() nowPage: EventEmitter<number> = new EventEmitter<number>();
 
   page: number;
   pagesNumber: number[];
@@ -50,27 +44,42 @@ export class PaginationComponent implements OnInit {
       }
     }
 
-    if (this.page > 3 && this.page < this.maxPages - 1) {
-      if (this.pagesNumber.indexOf(this.page) > (this.pagesCount / 2)) {
-        const ind = this.pagesNumber.indexOf(this.page) - (this.pagesCount / 2);
-        for (let i = 0; i < ind; i++) {
-          this.pagesNumber.shift();
-          this.pagesNumber.push(this.pagesNumber[this.pagesNumber.length - 1] + i + 1);
+
+    if (this.pagesNumber.indexOf(this.page) > (this.pagesCount / 2)) {
+      const ind = this.pagesNumber.indexOf(this.page) - (this.pagesCount / 2);
+      for (let i = 0; i < ind; i++) {
+        if (this.pagesNumber[this.pagesNumber.length - 1] === this.maxPages) {
+          break;
         }
-      } else if (this.pagesNumber.indexOf(this.page) < (this.pagesCount / 2)) {
-        const ind = (this.pagesCount / 2) - this.pagesNumber.indexOf(this.page);
-        for (let i = 0; i < ind; i++) {
-          this.pagesNumber.pop();
-          this.pagesNumber.unshift(this.pagesNumber[0] - i - 1);
+        this.pagesNumber.shift();
+        this.pagesNumber.push(this.pagesNumber[this.pagesNumber.length - 1] + i + 1);
+      }
+    } else if (this.pagesNumber.indexOf(this.page) < (this.pagesCount / 2)) {
+      const ind = (this.pagesCount / 2) - this.pagesNumber.indexOf(this.page);
+      for (let i = 0; i < ind; i++) {
+        if (this.pagesNumber[0] === 1) {
+          break;
         }
+        this.pagesNumber.pop();
+        this.pagesNumber.unshift(this.pagesNumber[0] - i - 1);
       }
     }
+
+
+  }
+
+  changePage(newPage: number) {
+    this.page = newPage;
+    this.nowPage.emit(this.page);
+    this._getMaxPages();
+    this.changePages();
   }
 
   nextPage() {
     this._getMaxPages();
     if (this.page < this.maxPages) {
       this.page++;
+      this.nowPage.emit(this.page);
       this.changePages();
     }
   }
@@ -79,6 +88,7 @@ export class PaginationComponent implements OnInit {
     this._getMaxPages();
     if (this.page > 1) {
       this.page--;
+      this.nowPage.emit(this.page);
       this.changePages();
     }
   }
@@ -92,8 +102,12 @@ export class PaginationComponent implements OnInit {
       return 'checkPage';
   }
 
-  chengePageCount() {
+  changePageCount() {
     this.sendPageCount.emit(this.prevPages);
+    this._getMaxPages();
+    this.page = 1;
+    this.pagesNumber = undefined;
+    this.changePages();
   }
 
   ngOnInit() {

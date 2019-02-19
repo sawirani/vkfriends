@@ -18,6 +18,6 @@
 </div>
 
 <div class="pagination">
-  <app-pagination [items]="friendsCount" (sendPageCount)="pageCount($event)"></app-pagination>
+  <app-pagination [items]="friendsCount" (sendPageCount)="pageCount($event)" (nowPage)="sendPage($event)" ></app-pagination>
 </div>
 

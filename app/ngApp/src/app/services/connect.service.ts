@@ -14,12 +14,12 @@ export class ConnectService {
   }
 
   isToken(): boolean {
-    return localStorage.getItem('token') ? true : false;
+    return !!localStorage.getItem('token');
   }
 
-  getFriends() {
+  getFriends(page: number) {
     const token = localStorage.getItem('token');
-    return this.http.get(this.domain + 'app/getfriends' + token);
+    return this.http.get(this.domain + 'app/getfriends' + token + '&' + page);
   }
 
   GetToken() {

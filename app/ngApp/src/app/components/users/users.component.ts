@@ -3,6 +3,8 @@ import {ConnectService} from '../../services/connect.service';
 import {User} from '../../models/user.model';
 import {Router} from '@angular/router';
 
+// count!!! при заборе данных отправлять вторым параметром count
+
 
 @Component({
   selector: 'app-users',
@@ -15,11 +17,10 @@ export class UsersComponent implements OnInit {
   searchStr = '';
   paramSelect: string;
   friendsCount: number;
+  page = 1;
 
-  constructor(
-    private _connectService: ConnectService,
-    private _router: Router,
-  ) {
+  constructor(private _connectService: ConnectService,
+              private _router: Router) {
   }
 
   toProfile(userId: number) {
@@ -58,9 +59,10 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  _getFriends() {
-    this._connectService.getFriends()
+  _getFriends(page: number) {
+    this._connectService.getFriends(page)
       .subscribe((data: any) => {
+        console.log(data);
         this.friendsCount = data.data.count;
         this.users = data.data.items.map((item) => {
           const user = new User();
@@ -77,16 +79,20 @@ export class UsersComponent implements OnInit {
   }
 
   pageCount(pagecount: number) {
-    this._connectService.SendCount(pagecount).subscribe((res) => {
-      console.log(res);
-      this._getFriends();
+    this._connectService.SendCount(pagecount).subscribe(() => {
+      this.page = 1;
+      this._getFriends(this.page);
     });
+  }
+
+  sendPage(page: number) {
+    this.page = page;
+    this._getFriends(this.page);
   }
 
   ngOnInit() {
     this._connectService.SendCount(10).subscribe((res) => {
-      console.log(res);
-      this._getFriends();
+      this._getFriends(this.page);
     });
   }
 
