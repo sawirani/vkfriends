@@ -3,6 +3,7 @@ import {ConnectService} from '../../services/connect.service';
 import {User} from '../../models/user.model';
 import {Router} from '@angular/router';
 
+
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -13,7 +14,7 @@ export class UsersComponent implements OnInit {
   users: User[];
   searchStr = '';
   paramSelect: string;
-
+  friendsCount: number;
 
   constructor(
     private _connectService: ConnectService,
@@ -25,7 +26,7 @@ export class UsersComponent implements OnInit {
     this._router.navigate(['app/profile', userId]);
   }
 
-  _checkPerams(params: string, user: User) {
+  _checkParams(params: string, user: User) {
     let count = 0;
     for (let i = 0; i < this.searchStr.length; i++) {
       if (user[params][i].toLowerCase() === this.searchStr[i]) {
@@ -38,15 +39,14 @@ export class UsersComponent implements OnInit {
     return false;
   }
 
-  // имя фамилия город
   find(user: User) {
     if (this.searchStr) {
       if (this.paramSelect) {
-        return !this._checkPerams(this.paramSelect, user);
+        return !this._checkParams(this.paramSelect, user);
       } else {
         for (const field in user) {
           if (field === 'firstName' || field === 'lastName' || field === 'city') {
-            if (this._checkPerams(field, user)) {
+            if (this._checkParams(field, user)) {
               return false;
             }
           }
@@ -58,21 +58,36 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  _getFriends() {
     this._connectService.getFriends()
       .subscribe((data: any) => {
-        console.log(data);
+        this.friendsCount = data.data.count;
         this.users = data.data.items.map((item) => {
           const user = new User();
           user.firstName = item.first_name;
-          user.city = item.city.title;
+          if (user.city) {
+            user.city = item.city.title;
+          }
           user.lastName = item.last_name;
-          user.online = item.online;
           user.photo = item.photo_100;
           user.id = item.id;
           return user;
         });
       });
+  }
+
+  pageCount(pagecount: number) {
+    this._connectService.SendCount(pagecount).subscribe((res) => {
+      console.log(res);
+      this._getFriends();
+    });
+  }
+
+  ngOnInit() {
+    this._connectService.SendCount(10).subscribe((res) => {
+      console.log(res);
+      this._getFriends();
+    });
   }
 
 }

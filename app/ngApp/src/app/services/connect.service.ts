@@ -25,5 +25,10 @@ export class ConnectService {
   GetToken() {
     return this.http.get(this.domain + 'auth/vk');
   }
-  
+
+  SendCount(count: number) {
+    const obj = {count: count};
+    return this.http.put(this.domain + 'app/friendsCount', obj);
+  }
+
 }

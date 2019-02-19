@@ -5,9 +5,13 @@ import { FormsModule } from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
+import {MatButtonModule} from '@angular/material';
+import {MatIconModule} from '@angular/material/icon';
 
 import {UsersComponent} from './users.component';
 import { UserComponent } from './user/user.component';
+import {PaginationComponent} from '../pagination/pagination.component';
+
 
 @NgModule({
   imports: [
@@ -15,11 +19,14 @@ import { UserComponent } from './user/user.component';
     MatCardModule,
     MatInputModule,
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatButtonModule,
+    MatIconModule
   ],
   declarations: [
     UsersComponent,
-    UserComponent
+    UserComponent,
+    PaginationComponent,
   ],
 })
 export class UsersModule {

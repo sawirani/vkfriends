@@ -1,0 +1,32 @@
+<div class="paginator">
+
+  <button mat-button (click)="lastPage()">
+    <i class="material-icons">
+      keyboard_arrow_left
+    </i>
+  </button>
+
+  <span *ngFor="let vpage of pagesNumber" [ngClass]="isThisPage(vpage)">
+    {{vpage}}
+  </span>
+
+  <button mat-button (click)="nextPage()">
+    <i class="material-icons">
+      keyboard_arrow_right
+    </i>
+  </button>
+
+  <br>
+
+  <span> друзей на странице :</span>
+  <mat-form-field class="pagesCounter">
+    <mat-select [(ngModel)]="prevPages" (change)="chengePageCount()">
+      <mat-option *ngFor="let page of prevCount" [value]="page">
+        {{page}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>
+
+{{items}}

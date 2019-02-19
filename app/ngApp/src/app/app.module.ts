@@ -17,7 +17,7 @@ import {IndexComponent} from './components/index/index.component';
 import {NavigationComponent} from './components/navigation/navigation.component';
 import {TokenComponent} from './components/token/token.component';
 import {UsersModule} from './components/users/users.module';
-import { ProfileComponent } from './components/profile/profile.component';
+import {ProfileComponent} from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +37,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     UsersModule,
   ],
   providers: [ConnectService, AuthGuard, NoAuthGuard],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }
