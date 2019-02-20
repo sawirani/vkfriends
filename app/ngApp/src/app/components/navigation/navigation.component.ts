@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {ConnectService} from '../../services/connect.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -7,10 +9,15 @@ import {Component, OnInit} from '@angular/core';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor() {
+  isToken: boolean;
+
+  constructor(
+    private _connectService: ConnectService,
+    ) {
   }
 
   ngOnInit() {
+    this.isToken = this._connectService.isToken();
   }
 
 }

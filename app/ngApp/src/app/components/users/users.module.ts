@@ -7,6 +7,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import {UsersComponent} from './users.component';
 import { UserComponent } from './user/user.component';
@@ -21,7 +22,8 @@ import {PaginationComponent} from '../pagination/pagination.component';
     FormsModule,
     MatSelectModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatProgressSpinnerModule,
   ],
   declarations: [
     UsersComponent,

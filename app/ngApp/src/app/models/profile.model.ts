@@ -1,7 +1,9 @@
-export class User {
+export class Profile {
   firstName: string;
   lastName: string;
+  bithday: Date;
   city: string;
+  country: string;
   photo: string;
-  id: number;
+  sex: string;
 }

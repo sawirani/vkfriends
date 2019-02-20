@@ -44,25 +44,18 @@ export class PaginationComponent implements OnInit {
       }
     }
 
-
-    if (this.pagesNumber.indexOf(this.page) > (this.pagesCount / 2)) {
-      const ind = this.pagesNumber.indexOf(this.page) - (this.pagesCount / 2);
-      for (let i = 0; i < ind; i++) {
-        if (this.pagesNumber[this.pagesNumber.length - 1] === this.maxPages) {
-          break;
-        }
-        this.pagesNumber.shift();
-        this.pagesNumber.push(this.pagesNumber[this.pagesNumber.length - 1] + i + 1);
+    if (this.page >= this.pagesNumber[this.pagesNumber.length - 1]) {
+      if (this.pagesNumber[this.pagesNumber.length - 1] === this.maxPages) {
+        return;
       }
-    } else if (this.pagesNumber.indexOf(this.page) < (this.pagesCount / 2)) {
-      const ind = (this.pagesCount / 2) - this.pagesNumber.indexOf(this.page);
-      for (let i = 0; i < ind; i++) {
-        if (this.pagesNumber[0] === 1) {
-          break;
-        }
-        this.pagesNumber.pop();
-        this.pagesNumber.unshift(this.pagesNumber[0] - i - 1);
+      this.pagesNumber.shift();
+      this.pagesNumber.push(this.pagesNumber[this.pagesNumber.length - 1] + 1);
+    } else if (this.page <= this.pagesNumber[this.pagesNumber.length - 1]) {
+      if (this.pagesNumber[0] === 1) {
+        return;
       }
+      this.pagesNumber.pop();
+      this.pagesNumber.unshift(this.pagesNumber[0] - 1);
     }
 
 

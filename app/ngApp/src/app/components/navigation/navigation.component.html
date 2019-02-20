@@ -1,5 +1,7 @@
 <mat-toolbar class="toolbar" color="primary">
   <span class="toolbar-header"> VK Friends</span>
-  <!-- <span class="spacer"></span>
-  <span class="toolbar-menu">Войти</span> -->
+  <span class="spacer"></span>
+  <span class="toolbar-menu" *ngIf="!isToken">Войти</span>
+  <span class="toolbar-menu" *ngIf="isToken" routerLink="/app/users">Друзья</span>
+<!--  <span class="toolbar-menu" *ngIf="isToken">Профиль</span>  -->
 </mat-toolbar>

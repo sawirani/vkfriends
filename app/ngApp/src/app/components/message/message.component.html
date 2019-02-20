@@ -1,10 +1,16 @@
-<div class="dialog">
-<p>
-  <textarea cols="30" rows="4" [(ngModel)]="text"></textarea>
-</p>
+<div class="messages">
 
-<div mat-dialog-actions>
-  <button mat-button (click)="send()">Нажми меня</button>
-  <button mat-button (click)="onNoClick()">Назад</button>
 </div>
+
+<div class="dialog">
+  <div class="sendMessage">
+    <p>
+      <textarea cols="30" rows="4" [(ngModel)]="text"></textarea>
+    </p>
+
+    <div mat-dialog-actions>
+      <button mat-button (click)="send()">Нажми меня</button>
+      <button mat-button (click)="onNoClick()">Назад</button>
+    </div>
+  </div>
 </div>

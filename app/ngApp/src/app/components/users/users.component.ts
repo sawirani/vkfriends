@@ -67,7 +67,7 @@ export class UsersComponent implements OnInit {
         this.users = data.data.items.map((item) => {
           const user = new User();
           user.firstName = item.first_name;
-          if (user.city) {
+          if (item.city) {
             user.city = item.city.title;
           }
           user.lastName = item.last_name;
@@ -79,7 +79,7 @@ export class UsersComponent implements OnInit {
   }
 
   pageCount(pagecount: number) {
-    this._connectService.SendCount(pagecount).subscribe(() => {
+    this._connectService.sendCount(pagecount).subscribe(() => {
       this.page = 1;
       this._getFriends(this.page);
     });
@@ -91,7 +91,7 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._connectService.SendCount(10).subscribe((res) => {
+    this._connectService.sendCount(10).subscribe((res) => {
       this._getFriends(this.page);
     });
   }

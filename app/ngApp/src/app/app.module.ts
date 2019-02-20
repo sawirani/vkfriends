@@ -9,6 +9,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import {ConnectService} from './services/connect.service';
 
@@ -46,7 +47,8 @@ import { MessageComponent } from './components/message/message.component';
     MatCardModule,
     MatGridListModule,
     MatDialogModule,
-    FormsModule
+    FormsModule,
+    MatProgressSpinnerModule
   ],
   providers: [ConnectService, AuthGuard, NoAuthGuard],
   bootstrap: [AppComponent],

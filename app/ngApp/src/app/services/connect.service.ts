@@ -5,7 +5,6 @@ import {HttpClient} from '@angular/common/http';
 export class ConnectService {
 
   domain = 'http://localhost:8181/';
-  token = localStorage.getItem('token');
 
   constructor(private http: HttpClient) {
   }
@@ -19,25 +18,32 @@ export class ConnectService {
   }
 
   getFriends(page: number) {
-    return this.http.get(this.domain + 'app/getfriends' + this.token + '&' + page);
+    const token = localStorage.getItem('token');
+    return this.http.get(this.domain + 'app/getfriends' + token + '&' + page);
   }
 
-  GetToken() {
+  getToken() {
     return this.http.get(this.domain + 'auth/vk');
   }
 
-  SendCount(count: number) {
+  sendCount(count: number) {
     const obj = {count: count};
     return this.http.put(this.domain + 'app/friendsCount', obj);
   }
 
   getUser(id: number) {
-    return this.http.get(this.domain + 'app/getUser' + this.token + '&' + id);
+    const token = localStorage.getItem('token');
+    return this.http.get(this.domain + 'app/getUser' + token + '&' + id);
   }
 
-  SendMessage(message: string) {
+  sendMessage(message: string) {
     const sendMessage = {message: message};
     return this.http.put(this.domain + 'app/sendMessage', sendMessage);
+  }
+
+  getMasseges(id: number) {
+    const token = localStorage.getItem('token');
+    return this.http.get(this.domain + 'app/getMessages' + token + '&' + id);
   }
 
 }

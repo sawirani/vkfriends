@@ -11,10 +11,16 @@
   </mat-form-field>
 </mat-card>
 
+<div *ngIf="users">
 <div *ngFor="let user of users">
   <mat-card class="card" *ngIf="!find(user)" (click)="toProfile(user.id)">
     <app-user [user]="user" *ngIf="!find(user)"></app-user>
   </mat-card>
+</div>
+</div>
+
+<div *ngIf="!users">
+  <mat-spinner class="spinner"></mat-spinner>
 </div>
 
 <div class="pagination">
