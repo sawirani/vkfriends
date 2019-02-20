@@ -1,3 +1,5 @@
+import {Counters} from './profilecounters.model';
+
 export class User {
   firstName: string;
   lastName: string;
@@ -5,8 +7,9 @@ export class User {
   city: string;
   country: string;
   photo: string;
-  sex: number;
-  online: number;
-  phone: number;
+  sex: string;
   id: number;
+  counters: Counters;
 }
+
+//contacts

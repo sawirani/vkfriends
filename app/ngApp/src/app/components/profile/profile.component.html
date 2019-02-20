@@ -1,3 +1,141 @@
-<p>
-  profile works!
-</p>
+<mat-card class="example-card">
+  <mat-card-content class="content">
+    <div class="photo">
+      <img [src]="user.photo" alt="">
+    </div>
+    <div class="info">
+      <p class="header">{{user.firstName}} {{user.lastName}}</p>
+      <hr>
+      <div class="table">
+        <table class="simple-info">
+          <tr *ngIf="user.bithday">
+            <th>Дата рождения:</th>
+            <th>{{user.bithday}}</th>
+          </tr>
+          <tr *ngIf="user.sex">
+            <th>Пол:</th>
+            <th>{{user.sex}}</th>
+          </tr>
+          <tr *ngIf="user.country">
+            <th>Страна:</th>
+            <th>{{user.country}}</th>
+          </tr>
+          <tr *ngIf="user.city">
+            <th>Город:</th>
+            <th>{{user.city}}</th>
+          </tr>
+        </table>
+      </div>
+
+      <div class="info-table">
+        <mat-grid-list cols="3" rowHeight="5:4">
+          <mat-grid-tile>
+            <div>
+              <p>{{user.counters.photos}}</p>
+              <p>фотографий</p>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div>
+              <p>{{user.counters.videos}}</p>
+              <p>видио</p>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div>
+              <p>{{user.counters.audios}}</p>
+              <p>аудио</p>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div>
+              <p>{{user.counters.friends}}</p>
+              <p>друзей</p>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div>
+              <p>{{user.counters.mutual_friends}}</p>
+              <p>общих друзей</p>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <div>
+              <p>{{user.counters.online_friends}}</p>
+              <p>друзей онлаин</p>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+    </div>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="openMessage()">Написать сообщение</button>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card class="example-card">
+  <mat-card-content class="about">
+    <div *ngIf="about.movies">
+      <p>
+        Любимые фильмы
+      <hr>
+      <p>
+        {{about.movies}}
+      </p>
+      <hr>
+    </div>
+    <div *ngIf="about.music">
+      <p>
+        Любимая музыка
+      </p>
+      <hr>
+      <p>
+        {{about.music}}
+      </p>
+      <hr>
+    </div>
+    <div *ngIf="about.about">
+      <p>
+        О себе
+      </p>
+      <hr>
+      <p>
+        {{about.about}}
+      </p>
+      <hr>
+    </div>
+    <div *ngIf="about.books">
+      <p>
+        Любимые книги
+      </p>
+      <hr>
+      <p>
+        {{about.books}}
+      </p>
+    </div>
+    <div *ngIf="about.activities">
+      <p>
+        Деятельность
+      </p>
+      <hr>
+      <p>
+        {{about.activities}}
+      </p>
+      <hr>
+    </div>
+    <div *ngIf="about.interests">
+      <p>
+        Интересы
+      </p>
+      <hr>
+      <p>
+        {{about.interests}}
+      </p>
+      <hr>
+    </div>
+
+  </mat-card-content>
+
+</mat-card>

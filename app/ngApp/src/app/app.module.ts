@@ -2,9 +2,13 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import {ConnectService} from './services/connect.service';
 
@@ -18,6 +22,8 @@ import {NavigationComponent} from './components/navigation/navigation.component'
 import {TokenComponent} from './components/token/token.component';
 import {UsersModule} from './components/users/users.module';
 import {ProfileComponent} from './components/profile/profile.component';
+import { NotfoundComponent } from './components/notfound/notfound.component';
+import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +32,8 @@ import {ProfileComponent} from './components/profile/profile.component';
     NavigationComponent,
     TokenComponent,
     ProfileComponent,
+    NotfoundComponent,
+    MessageComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,9 +43,14 @@ import {ProfileComponent} from './components/profile/profile.component';
     MatToolbarModule,
     MatButtonModule,
     UsersModule,
+    MatCardModule,
+    MatGridListModule,
+    MatDialogModule,
+    FormsModule
   ],
   providers: [ConnectService, AuthGuard, NoAuthGuard],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [MessageComponent],
 })
 export class AppModule {
 }

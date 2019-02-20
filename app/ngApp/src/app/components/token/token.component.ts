@@ -1,12 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {ConnectService} from '../../services/connect.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-token',
   templateUrl: './token.component.html',
   styleUrls: ['./token.component.css']
 })
+
+// !!!!!!!!!!!!!!!!! private activateRoute: ActivatedRoute
+// this.activateRoute.snapshot.params
+
 export class TokenComponent implements OnInit {
 
   constructor(

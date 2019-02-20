@@ -8,6 +8,7 @@ import {UsersComponent} from './components/users/users.component';
 import {IndexComponent} from './components/index/index.component';
 import {TokenComponent} from './components/token/token.component';
 import {ProfileComponent} from './components/profile/profile.component';
+import {NotfoundComponent} from './components/notfound/notfound.component';
 
 const defaultRoot = 'app';
 
@@ -31,6 +32,10 @@ const routes: Routes = [
     path: defaultRoot + '/profile/:id',
     component: ProfileComponent,
     canActivate : [AuthGuard],
+  },
+  {
+    path: '**',
+    component: NotfoundComponent
   },
 ];
 

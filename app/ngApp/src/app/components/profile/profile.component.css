@@ -1,0 +1,68 @@
+.example-card {
+  margin: 2% 20% 2% 20%;
+}
+
+.content {
+  display: flex;
+}
+
+.photo {
+  flex-grow: 1;
+  max-width: 40%;
+}
+
+img {
+  width: 100%;
+}
+
+.info {
+  flex-grow: 2;
+  padding: 2% 2% 2% 2%;
+}
+
+.header {
+  text-align: center;
+  font-size: 180%;
+  margin-top: -20px;
+}
+
+th {
+  font-weight: normal;
+  font-size: 120%;
+}
+
+tr th:first-child {
+  text-align: left;
+
+}
+
+tr th:last-child {
+  text-align: right;
+}
+
+.simple-info {
+  margin-top: 5%;
+  width: 100%;
+}
+
+.info-table{
+  margin: 10% 0 0 0;
+}
+
+mat-grid-tile{
+  border: 1px solid #c7c7c7;
+}
+
+mat-grid-tile div{
+  text-align: center;
+}
+
+mat-grid-tile p:first-child{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.about p:first-child{
+  font-weight: bold;
+  font-size: 150%;
+}
