@@ -11,13 +11,19 @@ export class NavigationComponent implements OnInit {
 
   isToken: boolean;
 
-  constructor(
-    private _connectService: ConnectService,
-    ) {
+  constructor(private connectService: ConnectService,
+              private router: Router) {
+  }
+
+  deleteToken() {
+    this.connectService.deleteToken();
+    setTimeout(() => {
+      this.router.navigate(['/app']);
+    }, 1000);
+
   }
 
   ngOnInit() {
-    this.isToken = this._connectService.isToken();
   }
 
 }

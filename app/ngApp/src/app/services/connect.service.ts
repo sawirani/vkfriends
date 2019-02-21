@@ -17,6 +17,10 @@ export class ConnectService {
     return !!localStorage.getItem('token');
   }
 
+  deleteToken(): void {
+    localStorage.removeItem('token');
+  }
+
   getToken() {
     return this.http.get(this.domain + 'auth/vk');
   }
