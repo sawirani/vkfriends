@@ -64,6 +64,7 @@ export class UsersComponent implements OnInit {
   // }
 
   usersInit(newUsers: any) {
+    //console.log(newUsers);
     this.users = newUsers.items.map((item) => {
       const user = new User();
       this.friendsCount = newUsers.count;
@@ -109,12 +110,15 @@ export class UsersComponent implements OnInit {
       this.searchStr = term;
       if (term) {
         this.sort = true;
+        this._connectService.searchUsers(term, this.page).subscribe((res: any) => {
+          this.usersInit(res.data);
+        });
       } else {
         this.sort = false;
+        this._connectService.sendCount(10).subscribe(() => {
+          this._getFriends(this.page);
+        });
       }
-      this._connectService.searchUsers(term, this.page).subscribe((res: any) => {
-        this.usersInit(res.data);
-      });
     });
   }
 

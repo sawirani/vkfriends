@@ -8,9 +8,6 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./token.component.css']
 })
 
-// !!!!!!!!!!!!!!!!! private activateRoute: ActivatedRoute
-// this.activateRoute.snapshot.params
-
 export class TokenComponent implements OnInit {
 
   constructor(
@@ -30,13 +27,11 @@ export class TokenComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(location.hash);
     const token: string = this._getToken(location.hash);
     this.connect.saveToken(token);
     setTimeout(() => {
         this.router.navigate(['/app/users']);
-      }
-      , 5);
+      }, 5);
   }
 
 }
