@@ -1,22 +1,22 @@
 <mat-card class="search-panel">
   <mat-form-field class="search">
-    <input matInput type="search" placeholder="Поиск" [(ngModel)]="searchStr">
+    <input matInput type="search" placeholder="Поиск" [formControl]="searchField">
   </mat-form-field>
-  <mat-form-field>
-    <mat-select [(value)]="paramSelect">
-      <mat-option>None</mat-option>
-      <mat-option value="firstName">Имя</mat-option>
-      <mat-option value="lastName">Фамилия</mat-option>
-    </mat-select>
-  </mat-form-field>
+  <!--<mat-form-field>-->
+  <!--<mat-select [(value)]="paramSelect">-->
+  <!--<mat-option>None</mat-option>-->
+  <!--<mat-option value="firstName">Имя</mat-option>-->
+  <!--<mat-option value="lastName">Фамилия</mat-option>-->
+  <!--</mat-select>-->
+  <!--</mat-form-field>-->
 </mat-card>
 
 <div *ngIf="users">
-<div *ngFor="let user of users">
-  <mat-card class="card" *ngIf="!find(user)" (click)="toProfile(user.id)">
-    <app-user [user]="user" *ngIf="!find(user)"></app-user>
-  </mat-card>
-</div>
+  <div *ngFor="let user of users">
+    <mat-card class="card" (click)="toProfile(user.id)">
+      <app-user [user]="user"></app-user>
+    </mat-card>
+  </div>
 </div>
 
 <div *ngIf="!users">
@@ -24,6 +24,7 @@
 </div>
 
 <div class="pagination">
-  <app-pagination [items]="friendsCount" (sendPageCount)="pageCount($event)" (nowPage)="sendPage($event)" ></app-pagination>
+  <app-pagination [items]="friendsCount" (sendPageCount)="changeFriendsCount($event)"
+                  (nowPage)="changePage($event)"></app-pagination>
 </div>
 

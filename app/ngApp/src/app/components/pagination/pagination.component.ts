@@ -10,8 +10,8 @@ export class PaginationComponent implements OnInit {
 
   @Input() items: number;
 
-  @Output() sendPageCount: EventEmitter<number> = new EventEmitter<number>();
-  @Output() nowPage: EventEmitter<number> = new EventEmitter<number>();
+  @Output() sendPageCount: EventEmitter<number> = new EventEmitter<number>(); // изменили количество страниц
+  @Output() nowPage: EventEmitter<number> = new EventEmitter<number>(); // перешли на новую страницу
 
   page: number;
   pagesNumber: number[];
@@ -24,8 +24,6 @@ export class PaginationComponent implements OnInit {
 
   constructor() {
   }
-
-  // первые и последние!!
 
   changePages() {
     if (!this.pagesNumber) {
@@ -57,8 +55,6 @@ export class PaginationComponent implements OnInit {
       this.pagesNumber.pop();
       this.pagesNumber.unshift(this.pagesNumber[0] - 1);
     }
-
-
   }
 
   changePage(newPage: number) {

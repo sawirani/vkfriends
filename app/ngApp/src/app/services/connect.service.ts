@@ -17,13 +17,14 @@ export class ConnectService {
     return !!localStorage.getItem('token');
   }
 
+  getToken() {
+    return this.http.get(this.domain + 'auth/vk');
+  }
+
+
   getFriends(page: number) {
     const token = localStorage.getItem('token');
     return this.http.get(this.domain + 'app/getfriends' + token + '&' + page);
-  }
-
-  getToken() {
-    return this.http.get(this.domain + 'auth/vk');
   }
 
   sendCount(count: number) {
@@ -35,6 +36,12 @@ export class ConnectService {
     const token = localStorage.getItem('token');
     return this.http.get(this.domain + 'app/getUser' + token + '&' + id);
   }
+
+  searchUsers(str: string, page: number) {
+    const token = localStorage.getItem('token');
+    return this.http.get(this.domain + 'app/searchUsers' + token + '&' + str + '&' + page);
+  }
+
 
   sendMessage(message: string) {
     const sendMessage = {message: message};

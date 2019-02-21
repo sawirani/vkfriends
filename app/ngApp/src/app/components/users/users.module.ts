@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {FormsModule} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
@@ -10,7 +11,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import {UsersComponent} from './users.component';
-import { UserComponent } from './user/user.component';
+import {UserComponent} from './user/user.component';
 import {PaginationComponent} from '../pagination/pagination.component';
 
 
@@ -24,6 +25,7 @@ import {PaginationComponent} from '../pagination/pagination.component';
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     UsersComponent,

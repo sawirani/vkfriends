@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ConnectService} from '../../services/connect.service';
 import {User} from '../../models/user.model';
 import {Router} from '@angular/router';
+import {FormControl} from '@angular/forms';
 
 // count!!! при заборе данных отправлять вторым параметром count
 
@@ -14,10 +15,13 @@ import {Router} from '@angular/router';
 export class UsersComponent implements OnInit {
 
   users: User[];
-  searchStr = '';
+  searchStr: string;
   paramSelect: string;
   friendsCount: number;
   page = 1;
+  friendsOnPage = 10;
+  searchField: FormControl;
+  sort = false;
 
   constructor(private _connectService: ConnectService,
               private _router: Router) {
@@ -27,72 +31,90 @@ export class UsersComponent implements OnInit {
     this._router.navigate(['app/profile', userId]);
   }
 
-  _checkParams(params: string, user: User) {
-    let count = 0;
-    for (let i = 0; i < this.searchStr.length; i++) {
-      if (user[params][i].toLowerCase() === this.searchStr[i]) {
-        count++;
-      }
-      if (count === this.searchStr.length) {
-        return true;
-      }
-    }
-    return false;
-  }
+  // _checkParams(params: string, user: User) {
+  //   let count = 0;
+  //   for (let i = 0; i < this.searchStr.length; i++) {
+  //     if (user[params][i].toLowerCase() === this.searchStr[i]) {
+  //       count++;
+  //     }
+  //     if (count === this.searchStr.length) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
+  //
+  // find(user: User) {
+  //   if (this.searchStr) {
+  //     if (this.paramSelect) {
+  //       return !this._checkParams(this.paramSelect, user);
+  //     } else {
+  //       for (const field in user) {
+  //         if (field === 'firstName' || field === 'lastName' || field === 'city') {
+  //           if (this._checkParams(field, user)) {
+  //             return false;
+  //           }
+  //         }
+  //       }
+  //       return true;
+  //     }
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
-  find(user: User) {
-    if (this.searchStr) {
-      if (this.paramSelect) {
-        return !this._checkParams(this.paramSelect, user);
-      } else {
-        for (const field in user) {
-          if (field === 'firstName' || field === 'lastName' || field === 'city') {
-            if (this._checkParams(field, user)) {
-              return false;
-            }
-          }
-        }
-        return true;
+  usersInit(newUsers: any) {
+    this.users = newUsers.items.map((item) => {
+      const user = new User();
+      this.friendsCount = newUsers.count;
+      user.firstName = item.first_name;
+      if (item.city) {
+        user.city = item.city.title;
       }
-    } else {
-      return false;
-    }
+      user.lastName = item.last_name;
+      user.photo = item.photo_100;
+      user.id = item.id;
+      return user;
+    });
   }
 
   _getFriends(page: number) {
     this._connectService.getFriends(page)
       .subscribe((data: any) => {
-        console.log(data);
-        this.friendsCount = data.data.count;
-        this.users = data.data.items.map((item) => {
-          const user = new User();
-          user.firstName = item.first_name;
-          if (item.city) {
-            user.city = item.city.title;
-          }
-          user.lastName = item.last_name;
-          user.photo = item.photo_100;
-          user.id = item.id;
-          return user;
-        });
+        this.usersInit(data.data);
       });
   }
 
-  pageCount(pagecount: number) {
-    this._connectService.sendCount(pagecount).subscribe(() => {
-      this.page = 1;
-      this._getFriends(this.page);
-    });
+  changeFriendsCount(pageCount: number) {
+    this.friendsOnPage = pageCount;
   }
 
-  sendPage(page: number) {
+  changePage(page: number) {
     this.page = page;
-    this._getFriends(this.page);
+    if (this.sort) {
+      this._connectService.searchUsers(this.searchStr, this.page).subscribe((res: any) => {
+        this.usersInit(res.data);
+      });
+    } else {
+      this._getFriends(this.page);
+    }
   }
 
   ngOnInit() {
-    this._connectService.sendCount(10).subscribe((res) => {
+    this._connectService.sendCount(10).subscribe(() => {
       this._getFriends(this.page);
+    });
+    this.searchField = new FormControl();
+    this.searchField.valueChanges.subscribe(term => {
+      this.searchStr = term;
+      if (term) {
+        this.sort = true;
+      } else {
+        this.sort = false;
+      }
+      this._connectService.searchUsers(term, this.page).subscribe((res: any) => {
+        this.usersInit(res.data);
+      });
     });
   }
 
