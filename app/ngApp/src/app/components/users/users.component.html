@@ -11,7 +11,7 @@
   <!--</mat-form-field>-->
 </mat-card>
 
-<div *ngIf="users">
+<div *ngIf="users&&!load">
   <div *ngFor="let user of users">
     <mat-card class="card" (click)="toProfile(user.id)">
       <app-user [user]="user"></app-user>
@@ -19,12 +19,12 @@
   </div>
 </div>
 
-<div *ngIf="!users">
+<div *ngIf="!users||load">
   <mat-spinner class="spinner"></mat-spinner>
 </div>
 
-<div class="pagination">
-  <app-pagination [items]="friendsCount" (sendPageCount)="changeFriendsCount($event)"
+<div class="pagination" *ngIf="users&&!load">
+  <app-pagination [items]="friendsCount" [page]="page" (sendPageCount)="changeFriendsCount($event)"
                   (nowPage)="changePage($event)"></app-pagination>
 </div>
 

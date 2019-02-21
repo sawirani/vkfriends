@@ -16,12 +16,12 @@ export class UsersComponent implements OnInit {
 
   users: User[];
   searchStr: string;
-  paramSelect: string;
   friendsCount: number;
   page = 1;
   friendsOnPage = 10;
   searchField: FormControl;
   sort = false;
+  load = false;
 
   constructor(private _connectService: ConnectService,
               private _router: Router) {
@@ -80,9 +80,11 @@ export class UsersComponent implements OnInit {
   }
 
   _getFriends(page: number) {
+    this.load = true;
     this._connectService.getFriends(page)
       .subscribe((data: any) => {
         this.usersInit(data.data);
+        this.load = false;
       });
   }
 
@@ -110,13 +112,19 @@ export class UsersComponent implements OnInit {
       this.searchStr = term;
       if (term) {
         this.sort = true;
+        this.page = 1;
+        this.load = true;
         this._connectService.searchUsers(term, this.page).subscribe((res: any) => {
           this.usersInit(res.data);
+          this.load = false;
         });
       } else {
         this.sort = false;
+        this.page = 1;
+        this.load = true;
         this._connectService.sendCount(10).subscribe(() => {
           this._getFriends(this.page);
+          this.load = false;
         });
       }
     });

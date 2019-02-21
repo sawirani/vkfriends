@@ -9,11 +9,11 @@ import {ConnectService} from '../../services/connect.service';
 export class PaginationComponent implements OnInit {
 
   @Input() items: number;
+  @Input() page: number;
 
   @Output() sendPageCount: EventEmitter<number> = new EventEmitter<number>(); // изменили количество страниц
   @Output() nowPage: EventEmitter<number> = new EventEmitter<number>(); // перешли на новую страницу
 
-  page: number;
   pagesNumber: number[];
   pagesCount = 6;
   maxPages: number;
