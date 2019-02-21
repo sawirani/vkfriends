@@ -108,6 +108,8 @@ export class UsersComponent implements OnInit {
       this._getFriends(this.page);
     });
     this.searchField = new FormControl();
+
+
     this.searchField.valueChanges.subscribe(term => {
       this.searchStr = term;
       if (term) {
