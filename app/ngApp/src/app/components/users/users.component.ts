@@ -3,6 +3,7 @@ import {ConnectService} from '../../services/connect.service';
 import {User} from '../../models/user.model';
 import {Router} from '@angular/router';
 import {FormControl} from '@angular/forms';
+import {PageEvent} from '@angular/material';
 
 // count!!! при заборе данных отправлять вторым параметром count
 
@@ -17,54 +18,37 @@ export class UsersComponent implements OnInit {
   users: User[];
   searchStr: string;
   friendsCount: number;
-  page = 1;
+
+  page = 0;
+  friendsOnPageOptions = [10, 20, 30];
   friendsOnPage = 10;
+
   searchField: FormControl;
   sort = false;
   load = false;
 
+  paramSelect;
+
   constructor(private _connectService: ConnectService,
               private _router: Router) {
+  }
+
+  filter() {
+    console.log(this.paramSelect);
+  }
+
+  filterFriends() {
+    console.log('tut');
+    this._connectService.filterFriends(0, 'first_name').subscribe((data) => {
+      console.log(data);
+    });
   }
 
   toProfile(userId: number) {
     this._router.navigate(['app/profile', userId]);
   }
 
-  // _checkParams(params: string, user: User) {
-  //   let count = 0;
-  //   for (let i = 0; i < this.searchStr.length; i++) {
-  //     if (user[params][i].toLowerCase() === this.searchStr[i]) {
-  //       count++;
-  //     }
-  //     if (count === this.searchStr.length) {
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // }
-  //
-  // find(user: User) {
-  //   if (this.searchStr) {
-  //     if (this.paramSelect) {
-  //       return !this._checkParams(this.paramSelect, user);
-  //     } else {
-  //       for (const field in user) {
-  //         if (field === 'firstName' || field === 'lastName' || field === 'city') {
-  //           if (this._checkParams(field, user)) {
-  //             return false;
-  //           }
-  //         }
-  //       }
-  //       return true;
-  //     }
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
   usersInit(newUsers: any) {
-    //console.log(newUsers);
     this.users = newUsers.items.map((item) => {
       const user = new User();
       this.friendsCount = newUsers.count;
@@ -88,11 +72,19 @@ export class UsersComponent implements OnInit {
       });
   }
 
-  changeFriendsCount(pageCount: number) {
-    this.friendsOnPage = pageCount;
+  paginatorEvent(pageEvent: PageEvent) {
+    console.log(pageEvent);
+    if ((pageEvent.pageSize !== this.friendsOnPage)) {
+      this.friendsOnPage = pageEvent.pageSize;
+      this._connectService.sendCount(this.friendsOnPage).subscribe(() => {
+      });
+    }
+    if ((pageEvent.pageIndex !== this.page)) {
+      this._changePage(pageEvent.pageIndex);
+    }
   }
 
-  changePage(page: number) {
+  _changePage(page: number): void {
     this.page = page;
     if (this.sort) {
       this._connectService.searchUsers(this.searchStr, this.page).subscribe((res: any) => {
@@ -114,16 +106,18 @@ export class UsersComponent implements OnInit {
       this.searchStr = term;
       if (term) {
         this.sort = true;
-        this.page = 1;
+        this.page = 0;
         this.load = true;
+        this.friendsOnPage = 10;
         this._connectService.searchUsers(term, this.page).subscribe((res: any) => {
           this.usersInit(res.data);
           this.load = false;
         });
       } else {
         this.sort = false;
-        this.page = 1;
+        this.page = 0;
         this.load = true;
+        this.friendsOnPage = 10;
         this._connectService.sendCount(10).subscribe(() => {
           this._getFriends(this.page);
           this.load = false;

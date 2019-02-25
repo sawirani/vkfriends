@@ -9,10 +9,10 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 import {UsersComponent} from './users.component';
 import {UserComponent} from './user/user.component';
-import {PaginationComponent} from '../pagination/pagination.component';
 
 
 @NgModule({
@@ -26,11 +26,11 @@ import {PaginationComponent} from '../pagination/pagination.component';
     MatIconModule,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
+    MatPaginatorModule,
   ],
   declarations: [
     UsersComponent,
     UserComponent,
-    PaginationComponent,
   ],
 })
 export class UsersModule {

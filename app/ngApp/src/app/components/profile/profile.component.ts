@@ -1,11 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ConnectService} from '../../services/connect.service';
-import {User} from '../../models/user.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Counters} from '../../models/profilecounters.model';
 import {About} from '../../models/about.models';
-import {MessageComponent} from '../message/message.component';
-import {MatDialog} from '@angular/material';
 import {Profile} from '../../models/profile.model';
 
 @Component({
@@ -22,8 +19,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(private connectService: ConnectService,
               private router: Router,
-              private activateRoute: ActivatedRoute,
-              private dialog: MatDialog,) {
+              private activateRoute: ActivatedRoute) {
   }
 
   getUser() {
@@ -69,17 +65,6 @@ export class ProfileComponent implements OnInit {
           this.user.bithday = data.data[0].bdate;
         }
       });
-  }
-
-  openMessage() {
-    const dialogRef = this.dialog.open(MessageComponent, {
-      width: '500px',
-      height: '500px'
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
   }
 
   ngOnInit() {

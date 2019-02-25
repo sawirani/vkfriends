@@ -24,7 +24,6 @@ import {TokenComponent} from './components/token/token.component';
 import {UsersModule} from './components/users/users.module';
 import {ProfileComponent} from './components/profile/profile.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
-import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +33,6 @@ import { MessageComponent } from './components/message/message.component';
     TokenComponent,
     ProfileComponent,
     NotfoundComponent,
-    MessageComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +50,6 @@ import { MessageComponent } from './components/message/message.component';
   ],
   providers: [ConnectService, AuthGuard, NoAuthGuard],
   bootstrap: [AppComponent],
-  entryComponents: [MessageComponent],
 })
 export class AppModule {
 }

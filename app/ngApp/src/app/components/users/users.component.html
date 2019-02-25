@@ -2,14 +2,16 @@
   <mat-form-field class="search">
     <input matInput type="search" placeholder="Поиск" [formControl]="searchField">
   </mat-form-field>
-  <!--<mat-form-field>-->
-  <!--<mat-select [(value)]="paramSelect">-->
-  <!--<mat-option>None</mat-option>-->
-  <!--<mat-option value="firstName">Имя</mat-option>-->
-  <!--<mat-option value="lastName">Фамилия</mat-option>-->
-  <!--</mat-select>-->
-  <!--</mat-form-field>-->
+  <mat-form-field>
+    <mat-select [(value)]="paramSelect" (change)="filter()">
+      <mat-option>None</mat-option>
+      <mat-option value="first_name">Имя</mat-option>
+      <mat-option value="last_name">Фамилия</mat-option>
+    </mat-select>
+  </mat-form-field>
 </mat-card>
+
+<button (click)="filterFriends()">  Клик </button>
 
 <div *ngIf="users&&!load">
   <div *ngFor="let user of users">
@@ -23,8 +25,11 @@
   <mat-spinner class="spinner"></mat-spinner>
 </div>
 
-<div class="pagination" *ngIf="users&&!load">
-  <app-pagination [items]="friendsCount" [page]="page" (sendPageCount)="changeFriendsCount($event)"
-                  (nowPage)="changePage($event)"></app-pagination>
+<div class="pagination">
+  <mat-paginator [length]="friendsCount"
+                 [pageSize]="friendsOnPage"
+                 [pageSizeOptions]="friendsOnPageOptions"
+                 (page)="paginatorEvent($event)">
+  </mat-paginator>
 </div>
 

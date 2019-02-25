@@ -11,7 +11,7 @@ export class NavigationComponent implements OnInit {
 
   isToken: boolean;
 
-  constructor(private connectService: ConnectService,
+  constructor(public connectService: ConnectService,
               private router: Router) {
   }
 

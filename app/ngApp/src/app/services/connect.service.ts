@@ -25,7 +25,6 @@ export class ConnectService {
     return this.http.get(this.domain + 'auth/vk');
   }
 
-
   getFriends(page: number) {
     const token = localStorage.getItem('token');
     return this.http.get(this.domain + 'app/getfriends' + token + '&' + page);
@@ -46,15 +45,8 @@ export class ConnectService {
     return this.http.get(this.domain + 'app/searchUsers' + token + '&' + str + '&' + page);
   }
 
-
-  sendMessage(message: string) {
-    const sendMessage = {message: message};
-    return this.http.put(this.domain + 'app/sendMessage', sendMessage);
-  }
-
-  getMasseges(id: number) {
+  filterFriends(page: number, param: string) {
     const token = localStorage.getItem('token');
-    return this.http.get(this.domain + 'app/getMessages' + token + '&' + id);
+    return this.http.get(this.domain + 'app/filter' + token + '&' + param + '&' + page);
   }
-
 }
