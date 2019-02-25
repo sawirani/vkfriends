@@ -49,4 +49,9 @@ export class ConnectService {
     const token = localStorage.getItem('token');
     return this.http.get(this.domain + 'app/filter' + token + '&' + param + '&' + page);
   }
+
+  filterAndSort(param: string, str: string, page: number) {
+    const token = localStorage.getItem('token');
+    return this.http.get(this.domain + 'app/filersort' + token + '&' + str + '&' + page + '&' + param);
+  }
 }

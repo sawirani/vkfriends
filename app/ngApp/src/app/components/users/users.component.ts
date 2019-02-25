@@ -7,7 +7,6 @@ import {PageEvent} from '@angular/material';
 
 // count!!! при заборе данных отправлять вторым параметром count
 
-
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -20,12 +19,13 @@ export class UsersComponent implements OnInit {
   friendsCount: number;
 
   page = 0;
-  friendsOnPageOptions = [10, 20, 30];
+  friendsOnPageOptions = [10, 20, 30, 50];
   friendsOnPage = 10;
 
   searchField: FormControl;
   sort = false;
   load = false;
+  filter = false;
 
   paramSelect;
 
@@ -33,15 +33,23 @@ export class UsersComponent implements OnInit {
               private _router: Router) {
   }
 
-  filter() {
-    console.log(this.paramSelect);
-  }
-
   filterFriends() {
-    console.log('tut');
-    this._connectService.filterFriends(0, 'first_name').subscribe((data) => {
-      console.log(data);
-    });
+    if (this.paramSelect) {
+      this.filter = true;
+      this.load = true;
+      if (this.sort) {
+        this._connectService.filterAndSort(this.paramSelect, this.searchStr, this.page).subscribe((res: any) => {
+          this.usersInit(res.data);
+        })
+      } else {
+        this._connectService.filterFriends(this.page, this.paramSelect).subscribe((data: any) => {
+          this.usersInit(data.data);
+        });
+      }
+      this.load = false;
+    } else {
+      this.filter = false;
+    }
   }
 
   toProfile(userId: number) {
@@ -73,23 +81,33 @@ export class UsersComponent implements OnInit {
   }
 
   paginatorEvent(pageEvent: PageEvent) {
-    console.log(pageEvent);
     if ((pageEvent.pageSize !== this.friendsOnPage)) {
       this.friendsOnPage = pageEvent.pageSize;
       this._connectService.sendCount(this.friendsOnPage).subscribe(() => {
+        this._updatePage();
       });
     }
     if ((pageEvent.pageIndex !== this.page)) {
-      this._changePage(pageEvent.pageIndex);
+      this.page = pageEvent.pageIndex;
+      this._updatePage();
     }
   }
 
-  _changePage(page: number): void {
-    this.page = page;
+  _updatePage(): void {
     if (this.sort) {
-      this._connectService.searchUsers(this.searchStr, this.page).subscribe((res: any) => {
-        this.usersInit(res.data);
-      });
+
+      if (this.filter) {
+        this._connectService.filterAndSort(this.paramSelect, this.searchStr, this.page).subscribe((res: any) => {
+          this.usersInit(res.data);
+        })
+      } else {
+        this._connectService.searchUsers(this.searchStr, this.page).subscribe((res: any) => {
+          this.usersInit(res.data);
+        });
+      }
+
+    } else if (this.filter) {
+      this.filterFriends();
     } else {
       this._getFriends(this.page);
     }
@@ -109,6 +127,9 @@ export class UsersComponent implements OnInit {
         this.page = 0;
         this.load = true;
         this.friendsOnPage = 10;
+        if (this.filter) {
+          this._connectService.filterAndSort(this.paramSelect, term, this.page)
+        }
         this._connectService.searchUsers(term, this.page).subscribe((res: any) => {
           this.usersInit(res.data);
           this.load = false;

@@ -3,15 +3,13 @@
     <input matInput type="search" placeholder="Поиск" [formControl]="searchField">
   </mat-form-field>
   <mat-form-field>
-    <mat-select [(value)]="paramSelect" (change)="filter()">
+    <mat-select [(value)]="paramSelect" (change)="filterFriends()">
       <mat-option>None</mat-option>
       <mat-option value="first_name">Имя</mat-option>
       <mat-option value="last_name">Фамилия</mat-option>
     </mat-select>
   </mat-form-field>
 </mat-card>
-
-<button (click)="filterFriends()">  Клик </button>
 
 <div *ngIf="users&&!load">
   <div *ngFor="let user of users">
