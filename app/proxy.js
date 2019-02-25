@@ -83,7 +83,7 @@ module.exports = (app) => {
                 console.log(body);
                 let result = [];
                 for (let i = offset; i < userCount + offset; i++) {
-                    result.push(body[i]);
+                    result.push(body.response.items[i]);
                 }
 
                 res.json({status: 'Ok', data: {items: result}});
