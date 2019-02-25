@@ -33,18 +33,33 @@ export class UsersComponent implements OnInit {
               private _router: Router) {
   }
 
+  _filterServ(){
+    this._connectService.filterFriends(this.page, this.paramSelect).subscribe((data: any) => {
+      this.usersInit(data.data);
+    });
+  }
+
+  _sortServ(){
+    this._connectService.searchUsers(this.searchStr, this.page).subscribe((res: any) => {
+      this.usersInit(res.data);
+    });
+  }
+
+  _filterSort(){
+    this._connectService.filterAndSort(this.paramSelect, this.searchStr, this.page).subscribe((res: any) => {
+      this.usersInit(res.data);
+    })
+  }
+
+
   filterFriends() {
     if (this.paramSelect) {
       this.filter = true;
       this.load = true;
       if (this.sort) {
-        this._connectService.filterAndSort(this.paramSelect, this.searchStr, this.page).subscribe((res: any) => {
-          this.usersInit(res.data);
-        })
+        this._filterSort();
       } else {
-        this._connectService.filterFriends(this.page, this.paramSelect).subscribe((data: any) => {
-          this.usersInit(data.data);
-        });
+        this._filterServ();
       }
       this.load = false;
     } else {
@@ -97,13 +112,9 @@ export class UsersComponent implements OnInit {
     if (this.sort) {
 
       if (this.filter) {
-        this._connectService.filterAndSort(this.paramSelect, this.searchStr, this.page).subscribe((res: any) => {
-          this.usersInit(res.data);
-        })
+        this._filterSort()
       } else {
-        this._connectService.searchUsers(this.searchStr, this.page).subscribe((res: any) => {
-          this.usersInit(res.data);
-        });
+        this._sortServ();
       }
 
     } else if (this.filter) {
@@ -128,12 +139,10 @@ export class UsersComponent implements OnInit {
         this.load = true;
         this.friendsOnPage = 10;
         if (this.filter) {
-          this._connectService.filterAndSort(this.paramSelect, term, this.page)
+          this._filterSort();
         }
-        this._connectService.searchUsers(term, this.page).subscribe((res: any) => {
-          this.usersInit(res.data);
-          this.load = false;
-        });
+        this._sortServ();
+        this.load = false;
       } else {
         this.sort = false;
         this.page = 0;
