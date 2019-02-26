@@ -29,6 +29,11 @@ const routes: Routes = [
     canActivate : [NoAuthGuard],
   },
   {
+    path: defaultRoot + '/profile',
+    component: ProfileComponent,
+    canActivate : [AuthGuard],
+  },
+  {
     path: defaultRoot + '/profile/:id',
     component: ProfileComponent,
     canActivate : [AuthGuard],

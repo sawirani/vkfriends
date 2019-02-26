@@ -10,6 +10,7 @@ import {MatButtonModule} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import {UsersComponent} from './users.component';
 import {UserComponent} from './user/user.component';
@@ -27,6 +28,7 @@ import {UserComponent} from './user/user.component';
     MatProgressSpinnerModule,
     ReactiveFormsModule,
     MatPaginatorModule,
+    MatCheckboxModule
   ],
   declarations: [
     UsersComponent,

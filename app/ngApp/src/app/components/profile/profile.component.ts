@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ConnectService} from '../../services/connect.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Counters} from '../../models/profilecounters.model';
 import {About} from '../../models/about.models';
 import {Profile} from '../../models/profile.model';
@@ -17,18 +17,16 @@ export class ProfileComponent implements OnInit {
   about: About;
   counters: Counters;
 
-  constructor(private connectService: ConnectService,
-              private router: Router,
+  constructor(private _connectService: ConnectService,
               private activateRoute: ActivatedRoute) {
   }
 
   getUser() {
-    this.connectService.getUser(this.id)
+    this._connectService.getUser(this.id)
       .subscribe((data: any) => {
         if (data.status === 'Ok') {
           console.log(data);
           this.user = new Profile();
-          this.about = new About();
 
           this.user.firstName = data.data[0].first_name;
           this.user.lastName = data.data[0].last_name;
@@ -50,12 +48,15 @@ export class ProfileComponent implements OnInit {
             this.counters.online_friends = data.data[0].counters.online_friends;
           }
 
-          this.about.about = data.data[0].about;
-          this.about.activities = data.data[0].activities;
-          this.about.books = data.data[0].books;
-          this.about.interests = data.data[0].interests;
-          this.about.movies = data.data[0].movies;
-          this.about.music = data.data[0].music;
+          if (data.data[0].about) {
+            this.about = new About();
+            this.about.about = data.data[0].about;
+            this.about.activities = data.data[0].activities;
+            this.about.books = data.data[0].books;
+            this.about.interests = data.data[0].interests;
+            this.about.movies = data.data[0].movies;
+            this.about.music = data.data[0].music;
+          }
 
           if (data.data[0].sex === 2) {
             this.user.sex = 'мужской';
@@ -68,7 +69,11 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.id = this.activateRoute.snapshot.params.id;
+    if (this.activateRoute.snapshot.params.id) {
+      this.id = this.activateRoute.snapshot.params.id;
+    } else {
+      this.id = this._connectService.getUserId();
+    }
     this.getUser();
   }
 

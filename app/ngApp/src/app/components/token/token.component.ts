@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ConnectService} from '../../services/connect.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-token',
@@ -10,28 +10,33 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 export class TokenComponent implements OnInit {
 
+  token = '';
+  userId = '';
+
   constructor(
-    private connect: ConnectService,
+    private _connect: ConnectService,
     private router: Router,
   ) {
   }
 
-  _getToken(hash: string): string {
-    const startInd: number = hash.indexOf('access_token=') + 13;
+  _getToken(hash: string) {
+    let startInd: number = hash.indexOf('access_token=') + 13;
     const endInd: number = hash.indexOf('&', startInd);
-    let token = '';
     for (let i = startInd; i < endInd; i++) {
-      token += hash[i];
+      this.token += hash[i];
     }
-    return token;
+    startInd = hash.indexOf('user_id=') + 8;
+    for (let i = startInd; i < hash.length; i++) {
+      this.userId += hash[i];
+    }
   }
 
   ngOnInit() {
-    const token: string = this._getToken(location.hash);
-    this.connect.saveToken(token);
+    this._getToken(location.hash);
+    this._connect.saveData(this.token, this.userId);
     setTimeout(() => {
-        this.router.navigate(['/app/users']);
-      }, 5);
+      this.router.navigate(['/app/users']);
+    }, 5);
   }
 
 }

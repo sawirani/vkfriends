@@ -3,6 +3,7 @@
   <span class="spacer"></span>
   <span class="toolbar-menu" *ngIf="!connectService.isToken()" routerLink="/app">Войти</span>
   <span class="toolbar-menu" *ngIf="connectService.isToken()" routerLink="/app/users">Друзья</span>
-  <span class="toolbar-menu" *ngIf="connectService.isToken()" routerLink="/app/users" (click)="deleteToken()">Выйти</span>
-<!--  <span class="toolbar-menu" *ngIf="isToken">Профиль</span>  -->
+  <span class="toolbar-menu" *ngIf="connectService.isToken()" routerLink="/app/profile">Профиль</span>
+  <span class="toolbar-menu" *ngIf="connectService.isToken()" routerLink="/app/users"
+        (click)="deleteToken()">Выйти</span>
 </mat-toolbar>

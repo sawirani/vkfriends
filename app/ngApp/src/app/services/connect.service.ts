@@ -9,8 +9,9 @@ export class ConnectService {
   constructor(private http: HttpClient) {
   }
 
-  saveToken(token: string): void {
+  saveData(token: string, userId: string): void {
     localStorage.setItem('token', token);
+    localStorage.setItem('userId', userId);
   }
 
   isToken(): boolean {
@@ -23,6 +24,10 @@ export class ConnectService {
 
   getToken() {
     return this.http.get(this.domain + 'auth/vk');
+  }
+
+  getUserId() {
+    return Number(localStorage.getItem('userId'));
   }
 
   getFriends(page: number) {
@@ -53,5 +58,10 @@ export class ConnectService {
   filterAndSort(param: string, str: string, page: number) {
     const token = localStorage.getItem('token');
     return this.http.get(this.domain + 'app/filersort' + token + '&' + str + '&' + page + '&' + param);
+  }
+
+  getLists() {
+    const token = localStorage.getItem('token');
+    return this.http.get(this.domain + 'app/getfri' + token);
   }
 }

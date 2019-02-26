@@ -33,19 +33,19 @@ export class UsersComponent implements OnInit {
               private _router: Router) {
   }
 
-  _filterServ(){
+  _filterServ() {
     this._connectService.filterFriends(this.page, this.paramSelect).subscribe((data: any) => {
       this.usersInit(data.data);
     });
   }
 
-  _sortServ(){
+  _sortServ() {
     this._connectService.searchUsers(this.searchStr, this.page).subscribe((res: any) => {
       this.usersInit(res.data);
     });
   }
 
-  _filterSort(){
+  _filterSort() {
     this._connectService.filterAndSort(this.paramSelect, this.searchStr, this.page).subscribe((res: any) => {
       this.usersInit(res.data);
     })
@@ -87,9 +87,10 @@ export class UsersComponent implements OnInit {
   }
 
   _getFriends(page: number) {
-    this.load = true;
+    this.load = true
     this._connectService.getFriends(page)
       .subscribe((data: any) => {
+        console.log(data);
         this.usersInit(data.data);
         this.load = false;
       });
@@ -106,6 +107,12 @@ export class UsersComponent implements OnInit {
       this.page = pageEvent.pageIndex;
       this._updatePage();
     }
+  }
+
+  getFriendsLists(){
+    this._connectService.getLists().subscribe((data)=>{
+      console.log(data);
+    })
   }
 
   _updatePage(): void {

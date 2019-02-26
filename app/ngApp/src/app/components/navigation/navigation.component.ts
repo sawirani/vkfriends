@@ -9,8 +9,6 @@ import {Router} from '@angular/router';
 })
 export class NavigationComponent implements OnInit {
 
-  isToken: boolean;
-
   constructor(public connectService: ConnectService,
               private router: Router) {
   }
