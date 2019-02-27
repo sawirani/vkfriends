@@ -2,6 +2,11 @@
   margin: 2% 20% 2% 20%;
 }
 
+.example-card mat-grid-tile:hover{
+  background: #a384d9;
+  color: white;
+}
+
 .content {
   display: flex;
 }
@@ -43,10 +48,6 @@ tr th:last-child {
 .simple-info {
   margin-top: 5%;
   width: 100%;
-}
-
-.info-table{
-  margin: 10% 0 0 0;
 }
 
 mat-grid-tile{

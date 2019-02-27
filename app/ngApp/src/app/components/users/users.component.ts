@@ -30,7 +30,7 @@ export class UsersComponent implements OnInit {
   paramSelect;
 
   constructor(private _connectService: ConnectService,
-              private _router: Router) {
+              private _router: Router,) {
   }
 
   _filterServ() {
@@ -87,10 +87,14 @@ export class UsersComponent implements OnInit {
   }
 
   _getFriends(page: number) {
-    this.load = true
+    this.load = true;
     this._connectService.getFriends(page)
       .subscribe((data: any) => {
         console.log(data);
+        if (data.error) {
+          this._connectService.deleteData();
+          this._router.navigate(['/app']);
+        }
         this.usersInit(data.data);
         this.load = false;
       });
@@ -107,12 +111,6 @@ export class UsersComponent implements OnInit {
       this.page = pageEvent.pageIndex;
       this._updatePage();
     }
-  }
-
-  getFriendsLists(){
-    this._connectService.getLists().subscribe((data)=>{
-      console.log(data);
-    })
   }
 
   _updatePage(): void {

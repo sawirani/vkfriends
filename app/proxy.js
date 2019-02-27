@@ -9,6 +9,7 @@ module.exports = (app) => {
         return {
             method: 'GET',
             uri: 'https://api.vk.com/method/' + method + '&access_token=' + token + '&v=5.52',
+            json: true,
         }
     }
 
@@ -24,6 +25,7 @@ module.exports = (app) => {
                 offset: offset,
                 v: '5.52'
             },
+            json: true,
         }
     }
 
@@ -33,8 +35,7 @@ module.exports = (app) => {
                 if (req.params.id) {
                     request(options('users.get?&user_ids=' + req.params.id + '&fields=bdate,city,country,photo_400_orig,contacts,education,sex,counters,movies,music,about,activities,books,interests', req.params.token))
                         .then(function (response) {
-                            const body = JSON.parse(response);
-                            res.json({status: 'Ok', data: body.response})
+                            res.json({status: 'Ok', data: response.response})
                         })
                         .catch((error) => {
                             res.json({status: 'error', error: error})
@@ -65,10 +66,12 @@ module.exports = (app) => {
 
     app.get('/app/getfriends:token&:num', async function (req, res) {
         let offset = (req.params.num) * (userCount);
-        let result;
-        result = await request(options('friends.get?count=' + userCount + '&fields=city,photo_100&offset=' + offset, req.params.token));
-        const body = JSON.parse(result);
-        res.json({status: 'Ok', data: body.response});
+        let body = await request(options('friends.get?count=' + userCount + '&fields=city,photo_100&offset=' + offset, req.params.token));
+        if (body.error) {
+            res.json({status: 'Error', error: body.error});
+        } else {
+            res.json({status: 'Ok', data: body.response});
+        }
     });
 
     function filterUsers(items, param, num) {
@@ -85,37 +88,37 @@ module.exports = (app) => {
         return result
     }
 
-    app.get('/app/searchUsers:token&:str&:num', (req, res) => {
+    app.get('/app/searchUsers:token&:str&:num', async function (req, res) {
         let offset = (req.params.num) * (userCount);
-        request(postoptions('friends.search?', req.params.token, 'city,photo_100', userCount, req.params.str, offset))
-            .then((response) => {
-                const body = JSON.parse(response);
-                res.json({status: 'Ok', data: body.response})
-            })
-            .catch((error) => {
-                res.json({status: 'error', error: error})
-            })
+        let result;
+        result = await request(postoptions('friends.search?', req.params.token, 'city,photo_100', userCount, req.params.str, offset))
+        if (result.error) {
+            res.json({status: 'Error', error: result.error});
+        } else {
+            res.json({status: 'Ok', data: result.response});
+        }
     });
 
-    app.get('/app/filter:token&:param&:num', function (req, res) {
-        request(options('friends.get?order=name&fields=city,photo_100', req.params.token))
-            .then((data) => {
-                const body = JSON.parse(data);
-                const result = filterUsers(body.response.items, req.params.param, req.params.num);
-                res.json({status: 'Ok', data: {count: body.response.count, items: result}});
-            });
+    app.get('/app/filter:token&:param&:num', async function (req, res) {
+        let data;
+        data = await request(options('friends.get?order=name&fields=city,photo_100', req.params.token));
+        if (data.error) {
+            res.json({status: 'Error', error: body.error});
+        } else {
+            const result = filterUsers(data.response.items, req.params.param, req.params.num);
+            res.json({status: 'Ok', data: {count: data.response.count, items: result}});
+        }
     });
 
-    app.get('/app/filersort:token&:str&:num&:param', (req, res) => {
-        request(options('friends.search?&q=' + encodeURIComponent(req.params.str) + '&fields=city,photo_100', req.params.token))
-            .then((response) => {
-                const body = JSON.parse(response);
-                const result = filterUsers(body.response.items, req.params.param, req.params.num);
-                res.json({status: 'Ok', data: {count: body.response.count, items: result}});
-            })
-            .catch((error) => {
-                res.json({status: 'error', error: error})
-            })
+    app.get('/app/filersort:token&:str&:num&:param', async function(req, res) {
+        let data;
+        data = await request(options('friends.search?&q=' + encodeURIComponent(req.params.str) + '&fields=city,photo_100', req.params.token))
+        if (data.error) {
+            res.json({status: 'Error', error: body.error});
+        } else {
+            const result = filterUsers(data.response.items, req.params.param, req.params.num);
+            res.json({status: 'Ok', data: {count: data.response.count, items: result}});
+        }
     });
 
     app.get('/app*', (req, res) => {

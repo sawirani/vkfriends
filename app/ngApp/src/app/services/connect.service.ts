@@ -18,8 +18,9 @@ export class ConnectService {
     return !!localStorage.getItem('token');
   }
 
-  deleteToken(): void {
+  deleteData(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('userId');
   }
 
   getToken() {

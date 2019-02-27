@@ -14,7 +14,7 @@ export class NavigationComponent implements OnInit {
   }
 
   deleteToken() {
-    this.connectService.deleteToken();
+    this.connectService.deleteData();
     setTimeout(() => {
       this.router.navigate(['/app']);
     }, 1000);
