@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ConnectService} from '../../services/connect.service';
 import {Router} from '@angular/router';
 
@@ -7,21 +7,18 @@ import {Router} from '@angular/router';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css']
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent {
 
   constructor(public connectService: ConnectService,
-              private router: Router) {
+              private _router: Router) {
   }
 
-  deleteToken() {
+  deleteData() {
     this.connectService.deleteData();
     setTimeout(() => {
-      this.router.navigate(['/app']);
+      this._router.navigate(['/app']);
     }, 1000);
 
-  }
-
-  ngOnInit() {
   }
 
 }

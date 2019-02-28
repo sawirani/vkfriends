@@ -23,10 +23,6 @@ export class ConnectService {
     localStorage.removeItem('userId');
   }
 
-  getToken() {
-    return this.http.get(this.domain + 'auth/vk');
-  }
-
   getUserId() {
     return Number(localStorage.getItem('userId'));
   }
@@ -38,7 +34,7 @@ export class ConnectService {
 
   sendCount(count: number) {
     const obj = {count: count};
-    return this.http.put(this.domain + 'app/friendsCount', obj);
+    return this.http.post(this.domain + 'app/friendsCount', obj);
   }
 
   getUser(id: number) {
@@ -59,10 +55,5 @@ export class ConnectService {
   filterAndSort(param: string, str: string, page: number) {
     const token = localStorage.getItem('token');
     return this.http.get(this.domain + 'app/filersort' + token + '&' + str + '&' + page + '&' + param);
-  }
-
-  getLists() {
-    const token = localStorage.getItem('token');
-    return this.http.get(this.domain + 'app/getfri' + token);
   }
 }

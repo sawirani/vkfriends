@@ -5,5 +5,5 @@
   <span class="toolbar-menu" *ngIf="connectService.isToken()" routerLink="/app/users">Друзья</span>
   <span class="toolbar-menu" *ngIf="connectService.isToken()" routerLink="/app/profile">Профиль</span>
   <span class="toolbar-menu" *ngIf="connectService.isToken()" routerLink="/app/users"
-        (click)="deleteToken()">Выйти</span>
+        (click)="deleteData()">Выйти</span>
 </mat-toolbar>

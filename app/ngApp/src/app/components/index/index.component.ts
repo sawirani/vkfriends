@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {ConnectService} from '../../services/connect.service';
 
 @Component({
   selector: 'app-index',
@@ -8,13 +7,7 @@ import {ConnectService} from '../../services/connect.service';
 })
 export class IndexComponent {
 
-  constructor(private con: ConnectService) {
-  }
-
-  serverAuth() {
-    this.con.getToken().subscribe(result => {
-      console.log(result);
-    });
+  constructor() {
   }
 
   clientAuth() {

@@ -51,10 +51,10 @@ module.exports = (app) => {
         }
     });
 
-    app.put('/app/friendsCount', (req, res) => {
-        if (res.req.body) {
-            if (res.req.body.count) {
-                userCount = res.req.body.count;
+    app.post('/app/friendsCount', (req, res) => {
+        if (req.body) {
+            if (req.body.count) {
+                userCount = req.body.count;
                 res.json({status: 'ok', message: 'сохранили'});
             } else {
                 res.json({status: 'error', error: 'нет count сообщения'});
@@ -91,7 +91,7 @@ module.exports = (app) => {
     app.get('/app/searchUsers:token&:str&:num', async function (req, res) {
         let offset = (req.params.num) * (userCount);
         let result;
-        result = await request(postoptions('friends.search?', req.params.token, 'city,photo_100', userCount, req.params.str, offset))
+        result = await request(postoptions('friends.search?', req.params.token, 'city,photo_100', userCount, req.params.str, offset));
         if (result.error) {
             res.json({status: 'Error', error: result.error});
         } else {
@@ -103,18 +103,18 @@ module.exports = (app) => {
         let data;
         data = await request(options('friends.get?order=name&fields=city,photo_100', req.params.token));
         if (data.error) {
-            res.json({status: 'Error', error: body.error});
+            res.json({status: 'Error', error: data.error});
         } else {
             const result = filterUsers(data.response.items, req.params.param, req.params.num);
             res.json({status: 'Ok', data: {count: data.response.count, items: result}});
         }
     });
 
-    app.get('/app/filersort:token&:str&:num&:param', async function(req, res) {
+    app.get('/app/filersort:token&:str&:num&:param', async function (req, res) {
         let data;
         data = await request(options('friends.search?&q=' + encodeURIComponent(req.params.str) + '&fields=city,photo_100', req.params.token))
         if (data.error) {
-            res.json({status: 'Error', error: body.error});
+            res.json({status: 'Error', error: data.error});
         } else {
             const result = filterUsers(data.response.items, req.params.param, req.params.num);
             res.json({status: 'Ok', data: {count: data.response.count, items: result}});

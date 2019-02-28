@@ -13,19 +13,17 @@ import {Profile} from '../../models/profile.model';
 export class ProfileComponent implements OnInit {
 
   user: Profile;
-  id: number;
   about: About;
   counters: Counters;
 
   constructor(private _connectService: ConnectService,
-              private activateRoute: ActivatedRoute) {
+              private _activateRoute: ActivatedRoute) {
   }
 
-  getUser() {
-    this._connectService.getUser(this.id)
+  _getUser(id: number) {
+    this._connectService.getUser(id)
       .subscribe((data: any) => {
         if (data.status === 'Ok') {
-          console.log(data);
           this.user = new Profile();
 
           this.user.firstName = data.data[0].first_name;
@@ -69,12 +67,13 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.activateRoute.snapshot.params.id) {
-      this.id = this.activateRoute.snapshot.params.id;
+    let id: number;
+    if (this._activateRoute.snapshot.params.id) {
+      id = this._activateRoute.snapshot.params.id;
     } else {
-      this.id = this._connectService.getUserId();
+      id = this._connectService.getUserId();
     }
-    this.getUser();
+    this._getUser(id);
   }
 
 }

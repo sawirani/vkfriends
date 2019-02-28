@@ -10,12 +10,12 @@ import {Router} from '@angular/router';
 
 export class TokenComponent implements OnInit {
 
-  token = '';
-  userId = '';
+  _token = '';
+  _userId = '';
 
   constructor(
     private _connect: ConnectService,
-    private router: Router,
+    private _router: Router,
   ) {
   }
 
@@ -23,19 +23,19 @@ export class TokenComponent implements OnInit {
     let startInd: number = hash.indexOf('access_token=') + 13;
     const endInd: number = hash.indexOf('&', startInd);
     for (let i = startInd; i < endInd; i++) {
-      this.token += hash[i];
+      this._token += hash[i];
     }
     startInd = hash.indexOf('user_id=') + 8;
     for (let i = startInd; i < hash.length; i++) {
-      this.userId += hash[i];
+      this._userId += hash[i];
     }
   }
 
   ngOnInit() {
     this._getToken(location.hash);
-    this._connect.saveData(this.token, this.userId);
+    this._connect.saveData(this._token, this._userId);
     setTimeout(() => {
-      this.router.navigate(['/app/users']);
+      this._router.navigate(['/app/users']);
     }, 5);
   }
 
